@@ -1,0 +1,132 @@
+.main {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+}
+
+/* ヒーローセクション */
+.hero {
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+  color: white;
+  padding: 4rem 1rem;
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.heroSubtitle {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.95;
+}
+
+.heroDescription {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* コンテナ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* イントロセクション */
+.introSection {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  border-left: 4px solid #0066cc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.introText {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* セクションタイトル */
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0066cc;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* アレイセクション */
+.alleysSection {
+  margin: 3rem 0;
+  padding: 2rem 0;
+}
+
+/* グリッドレイアウト */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .introSection {
+    margin: 2rem 0;
+    padding: 1.5rem;
+  }
+
+  .introText {
+    font-size: 0.95rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .alleysSection {
+    margin: 2rem 0;
+  }
+}

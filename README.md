@@ -1,36 +1,245 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎳 沖縄ボウリング場ガイド
 
-## Getting Started
+沖縄県内のボウリング場を紹介するWebアプリケーションです。各店舗の営業時間、施設情報、アクセスなどを掲載しています。
 
-First, run the development server:
+## 📋 機能仕様
+
+### 1. トップページ（ホーム）
+- **ヒーローセクション**: サイトのタイトルとコンセプトを表示
+- **ボウリング場一覧**: 沖縄県内の全ボウリング場をカード形式で表示
+  - 店舗名
+  - 所在地
+  - レーン数（バッジ表示）
+  - 主要施設情報（駐車場、飲食、バリアフリー）
+  - 営業時間（平日・休日）
+  - 概要説明
+- **レスポンシブデザイン**: モバイル・タブレット・デスクトップに対応
+
+### 2. ボウリング場詳細ページ
+各ボウリング場の詳細情報を表示するページ（`/bowling/[id]`）
+
+#### 表示内容
+- **ヘッダー画像**: 店舗の外観・雰囲気を示す画像
+- **基本情報カード**:
+  - 店舗名
+  - 住所
+  - 電話番号（クリックで直接電話可能）
+  - レーン数
+  - ウェブサイトリンク（存在する場合）
+
+- **営業時間**: 平日と休日の営業時間を表示
+
+- **施設・サービス情報**:
+  - 駐車場の有無
+  - 飲食施設の有無
+  - バリアフリー対応の有無
+  - その他の施設リスト
+
+- **詳細説明**: 店舗の特徴や利用おすすめポイント
+
+- **アクセス**: Google Mapsを埋め込んで店舗位置を表示
+
+- **CTA（Call To Action）**: 
+  - 電話で問い合わせるボタン
+  - 一覧に戻るリンク
+
+### 3. ナビゲーション
+- **ヘッダー**: 
+  - サイトロゴ（ホームへのリンク）
+  - ナビゲーションメニュー（ホーム、ランキング、お問い合わせ）
+  - 常時表示（スティッキー）
+
+- **フッター**:
+  - コピーライト情報
+  - サイト説明
+
+### 4. エラーハンドリング
+- **404ページ**: 存在しないボウリング場IDにアクセスした場合
+
+## 🛠️ 技術スタック
+
+### フレームワーク・言語
+- **Next.js 16.0.1**: フレームワーク
+- **TypeScript**: 静型言語
+- **React 19.2.0**: UIライブラリ
+
+### スタイリング
+- **globals.css**: グローバルスタイル
+- **CSS Modules**: スコープ付きCSS（各コンポーネントに対応）
+- **Tailwind CSS**: ユーティリティクラス（オプション）
+
+### 開発ツール
+- **ESLint**: コード品質管理
+- **PostCSS**: CSS処理
+
+## 📁 ディレクトリ構成
+
+```
+app/
+├── components/              # 共有コンポーネント
+│   ├── Header.tsx          # ヘッダーコンポーネント
+│   ├── Header.module.css   # ヘッダースタイル
+│   ├── Footer.tsx          # フッターコンポーネント
+│   ├── Footer.module.css   # フッタースタイル
+│   ├── BowlingCard.tsx     # ボウリング場カードコンポーネント
+│   └── BowlingCard.module.css
+├── data/                    # データ
+│   └── bowling-alleys.ts   # ボウリング場データ
+├── types/                   # 型定義
+│   └── bowling.ts          # ボウリング場の型定義
+├── bowling/                 # ボウリング場詳細ページ
+│   └── [id]/
+│       ├── page.tsx        # 詳細ページ
+│       ├── detail.module.css
+│       ├── not-found.tsx   # 404ページ
+│       └── not-found.module.css
+├── layout.tsx              # ルートレイアウト
+├── page.tsx                # トップページ
+├── page.module.css         # トップページスタイル
+└── globals.css             # グローバルスタイル
+```
+
+## 🚀 セットアップ手順
+
+### 環境要件
+- Node.js 18.0.0 以上
+- npm または yarn
+
+### インストール
+
+```bash
+# 依存パッケージのインストール
+npm install
+
+# または
+yarn install
+```
+
+### 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
+# または
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開きます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ビルド
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+# または
+yarn build
+```
 
-## Learn More
+### 本番環境での起動
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm start
+# または
+yarn start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📝 スクリプトコマンド
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev`: 開発サーバーを起動
+- `npm run build`: 本番用ビルドを作成
+- `npm start`: 本番サーバーを起動
+- `npm run lint`: ESLintで静的解析を実行
 
-## Deploy on Vercel
+## 🎨 カラースキーム
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **プライマリー**: `#0066cc`（青）
+- **セカンダリー**: `#ff6600`（オレンジ）
+- **ライトグレー**: `#f5f5f5`
+- **ボーダーカラー**: `#e0e0e0`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📱 レスポンシブ対応
+
+- **デスクトップ**: 3カラムグリッド
+- **タブレット**: 2カラムグリッド
+- **モバイル**: 1カラムグリッド
+
+## 📊 掲載ボウリング場
+
+1. **パールボウル** - 那覇市（24レーン）
+2. **シーサイドボウル** - 宜野湾市（20レーン）
+3. **スターボウリング沖縄** - 浦添市（32レーン）
+4. **トロピカルボウル** - 読谷村（18レーン）
+5. **サンライズボウル** - 名護市（16レーン）
+
+## 🔄 ルーティング構成
+
+- `/` - トップページ（ボウリング場一覧）
+- `/bowling/[id]` - ボウリング場詳細ページ
+- `/bowling/[id]/not-found` - ボウリング場が見つからない場合の404ページ
+
+## 🌐 App Router について
+
+このプロジェクトは Next.js の**App Router**を使用しています。
+
+### App Router の特徴
+- ファイルシステムベースのルーティング
+- `app/` ディレクトリ内のファイルが自動的にルートになる
+- `page.tsx`: ページコンポーネント
+- `layout.tsx`: レイアウトコンポーネント
+- `not-found.tsx`: 404ページ
+- `[id]`: ダイナミックセグメント
+
+## 📄 型定義
+
+### BowlingAlley インターフェース
+
+```typescript
+interface BowlingAlley {
+  id: number;
+  name: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  lanes: number;
+  facilities: string[];
+  openingHours: {
+    weekday: string;
+    weekend: string;
+  };
+  parking: boolean;
+  foods: boolean;
+  wheelchair: boolean;
+  description: string;
+  image: string;
+  phone: string;
+  website?: string;
+}
+```
+
+## 🔍 SEO 対策
+
+- ページタイトルとメタディスクリプションの設定
+- 日本語サポート（`lang="ja"`）
+- 構造化データの基礎設定
+
+## 📈 今後の拡張案
+
+- [ ] ボウリング場の検索機能
+- [ ] 料金表示・比較機能
+- [ ] ユーザーレビュー・評価機能
+- [ ] 予約機能の統合
+- [ ] 営業時間の更新通知
+- [ ] インタラクティブマップ機能
+- [ ] お気に入り登録機能
+- [ ] ブログ・ニュースセクション
+
+## 📄 ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## 📞 お問い合わせ
+
+ご質問やご提案は、お気軽にお問い合わせください。
+
+---
+
+**作成日**: 2025年11月12日  
+**バージョン**: 1.0.0

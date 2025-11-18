@@ -1,8 +1,10 @@
-import { bowlingAlleys } from "./data/bowling-alleys";
-import BowlingCard from "./components/BowlingCard";
+import BowlingListClient from "./components/BowlingListClient";
 import styles from "./page.module.css";
+import { getBowlingsList } from "@/server_libs/micro_cms";
 
-export default function Home() {
+export default async function Home() {
+  const bowlingDataList = await getBowlingsList();
+  
   return (
     <main className={styles.main}>
       {/* ヒーローセクション */}
@@ -20,25 +22,18 @@ export default function Home() {
 
       {/* メインコンテンツ */}
       <div className={styles.container}>
-        {/* 紹介セクション */}
-        <section className={styles.introSection}>
-          <h2 className={styles.sectionTitle}>ようこそ</h2>
-          <p className={styles.introText}>
-            このサイトは、沖縄県内のボウリング場をご紹介するポータルサイトです。各ボウリング場の営業時間、料金体系、設備情報などを掲載しています。
-            あなたのお気に入りのボウリング場を見つけてください！
-          </p>
-        </section>
+
 
         {/* ボウリング場一覧 */}
         <section className={styles.alleysSection}>
           <h2 className={styles.sectionTitle}>沖縄のボウリング場</h2>
           <p className={styles.sectionSubtitle}>
-            全 {bowlingAlleys.length} 店舗を紹介しています
+            全 {bowlingDataList.contents.length} 店舗を紹介しています
           </p>
-          <div className={styles.grid}>
-            {bowlingAlleys.map((alley) => (
-              <BowlingCard key={alley.id} alley={alley} />
-            ))}
+          {/* クライアント側で位置フィルタ・ソートするコンポーネントに差し替え */}
+          <div>
+            {/* BowlingListClient はクライアントコンポーネントで、alleys データを受け取って処理する */}
+            <BowlingListClient alleys={bowlingDataList} />
           </div>
         </section>
       </div>

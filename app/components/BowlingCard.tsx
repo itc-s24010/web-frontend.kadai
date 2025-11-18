@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { BowlingAlley } from "../types/bowling";
 import styles from "./BowlingCard.module.css";
+import { bowling } from "@/server_libs/micro_cms/data";
+import Image from "next/image";
 
 interface BowlingCardProps {
-  alley: BowlingAlley;
+  alley: bowling;
 }
 
 export default function BowlingCard({ alley }: BowlingCardProps) {
@@ -11,7 +12,7 @@ export default function BowlingCard({ alley }: BowlingCardProps) {
     <Link href={`/bowling/${alley.id}`}>
       <article className={styles.card}>
         <div className={styles.imageContainer}>
-          <img src={alley.image} alt={alley.name} className={styles.image} />
+          <Image src={alley.image.url} alt={alley.name} className={styles.image} width={200} height={150}/>
           <div className={styles.badge}>{alley.lanes} レーン</div>
         </div>
         <div className={styles.content}>
@@ -28,11 +29,11 @@ export default function BowlingCard({ alley }: BowlingCardProps) {
           <div className={styles.hours}>
             <div>
               <span className={styles.label}>平日:</span>{" "}
-              {alley.openingHours.weekday}
+              {alley.weekday}
             </div>
             <div>
               <span className={styles.label}>休日:</span>{" "}
-              {alley.openingHours.weekend}
+              {alley.weekend}
             </div>
           </div>
         </div>

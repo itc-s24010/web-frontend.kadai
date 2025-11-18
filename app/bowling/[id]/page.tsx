@@ -1,21 +1,24 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getBowlingAlleyById } from "@/app/data/bowling-alleys";
 import styles from "./detail.module.css";
 
+import React from "react";
+import { getBowling } from "@/server_libs/micro_cms";
+import Image from "next/image";
 interface Params {
   id: string;
 }
 
-export default function BowlingDetailPage({
+export default async function BowlingDetailPage({
   params,
 }: {
-  params: Promise<Params>;
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = React.use(params);
-  const alley = getBowlingAlleyById(Number(id));
+  const { id } = await params;
+  const bowlingData = await getBowling(id);
+  console.log(bowlingData);
 
-  if (!alley) {
+  if (!bowlingData) {
     notFound();
   }
 
@@ -31,43 +34,39 @@ export default function BowlingDetailPage({
         <article className={styles.article}>
           {/* ヘッダー画像 */}
           <div className={styles.imageContainer}>
-            <img
-              src={alley.image}
-              alt={alley.name}
-              className={styles.headerImage}
-            />
+            <Image src={bowlingData.image.url} alt={bowlingData.name} width={bowlingData.image.width} height={bowlingData.image.height} className={styles.headerImage} />
           </div>
 
           {/* 基本情報 */}
           <section className={styles.basicInfo}>
-            <h1 className={styles.title}>{alley.name}</h1>
+            <h1 className={styles.title}>{bowlingData.name}</h1>
 
             {/* 主要情報カード */}
             <div className={styles.infoGrid}>
               <div className={styles.infoCard}>
                 <h3 className={styles.infoTitle}>📍 住所</h3>
-                <p className={styles.infoContent}>{alley.location}</p>
+                <p className={styles.infoContent}>{bowlingData.location}</p>
               </div>
 
               <div className={styles.infoCard}>
                 <h3 className={styles.infoTitle}>📱 電話番号</h3>
                 <p className={styles.infoContent}>
-                  <a href={`tel:${alley.phone}`}>{alley.phone}</a>
+                  <a href={`tel:${bowlingData.phone}`}>{bowlingData.phone}</a>
                 </p>
               </div>
 
               <div className={styles.infoCard}>
                 <h3 className={styles.infoTitle}>🎳 レーン数</h3>
-                <p className={styles.infoContent}>{alley.lanes} レーン</p>
+                <p className={styles.infoContent}>{bowlingData.lanes} レーン</p>
               </div>
 
-              {alley.website && (
+              {bowlingData.website && (
                 <div className={styles.infoCard}>
                   <h3 className={styles.infoTitle}>🌐 ウェブサイト</h3>
                   <p className={styles.infoContent}>
-                    <a href={alley.website} target="_blank" rel="noopener noreferrer">
+                    <Link href={"bowlingData.website"}>
                       公式サイトを見る
-                    </a>
+                    </Link>
                   </p>
                 </div>
               )}
@@ -81,13 +80,13 @@ export default function BowlingDetailPage({
               <div className={styles.hourItem}>
                 <span className={styles.dayLabel}>平日</span>
                 <span className={styles.hourValue}>
-                  {alley.openingHours.weekday}
+                  {bowlingData.weekday}
                 </span>
               </div>
               <div className={styles.hourItem}>
                 <span className={styles.dayLabel}>休日</span>
                 <span className={styles.hourValue}>
-                  {alley.openingHours.weekend}
+                  {bowlingData.weekend}
                 </span>
               </div>
             </div>
@@ -99,29 +98,29 @@ export default function BowlingDetailPage({
             <div className={styles.features}>
               <div className={styles.featureItem}>
                 <span className={styles.featureIcon}>
-                  {alley.parking ? "✅" : "❌"}
+                  {bowlingData.parking ? "✅" : "❌"}
                 </span>
                 <span>駐車場</span>
               </div>
               <div className={styles.featureItem}>
                 <span className={styles.featureIcon}>
-                  {alley.foods ? "✅" : "❌"}
+                  {bowlingData.foods ? "✅" : "❌"}
                 </span>
                 <span>飲食施設</span>
               </div>
               <div className={styles.featureItem}>
                 <span className={styles.featureIcon}>
-                  {alley.wheelchair ? "✅" : "❌"}
+                  {bowlingData.wheelchair ? "✅" : "❌"}
                 </span>
                 <span>バリアフリー対応</span>
               </div>
             </div>
 
-            {alley.facilities.length > 0 && (
+            {bowlingData.facilities.length > 0 && (
               <div className={styles.facilitiesList}>
                 <h3 className={styles.facilitiesTitle}>その他の施設</h3>
                 <ul className={styles.list}>
-                  {alley.facilities.map((facility, index) => (
+                  {bowlingData.facilities.split(",").map((facility, index) => (
                     <li key={index} className={styles.listItem}>
                       • {facility}
                     </li>
@@ -134,7 +133,7 @@ export default function BowlingDetailPage({
           {/* 詳細説明 */}
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>詳細情報</h2>
-            <p className={styles.description}>{alley.description}</p>
+            <p className={styles.description}>{bowlingData.description}</p>
           </section>
 
           {/* 地図セクション */}
@@ -142,22 +141,21 @@ export default function BowlingDetailPage({
             <h2 className={styles.sectionTitle}>アクセス</h2>
             <div className={styles.mapContainer}>
               <iframe
+                src={`https://maps.google.com/maps?output=embed&q=${bowlingData.latitude},${bowlingData.longitude}&ll=${bowlingData.latitude},${bowlingData.longitude}&t=m&hl=ja&z=18`}
                 width="100%"
-                height="400"
-                loading="lazy"
+                height="450"
+                style={{ border: 0 }}
                 allowFullScreen
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDummyKeyForExample&q=${encodeURIComponent(
-                  alley.name + " " + alley.location
-                )}`}
-                className={styles.map}
-              ></iframe>
+              >
+              </iframe>
             </div>
           </section>
 
           {/* CTA */}
           <section className={styles.ctaSection}>
-            <a href={`tel:${alley.phone}`} className={styles.ctaButton}>
+            <a href={`tel:${bowlingData.phone}`} className={styles.ctaButton}>
               📞 電話で問い合わせる
             </a>
             <Link href="/" className={styles.ctaButtonSecondary}>
@@ -170,4 +168,4 @@ export default function BowlingDetailPage({
   );
 }
 
-import React from "react";
+

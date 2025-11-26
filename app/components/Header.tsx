@@ -14,12 +14,7 @@ export default function Header() {
           <Link href="/" className={styles.navLink}>
             ホーム
           </Link>
-          <Link href="#" className={styles.navLink}>
-            ランキング
-          </Link>
-          <Link href="#" className={styles.navLink}>
-            お問い合わせ
-          </Link>
+          {/* ランキング・お問い合わせ機能は不要のためナビから削除 */}
         </nav>
       </div>
     </header>

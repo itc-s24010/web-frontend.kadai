@@ -10,7 +10,7 @@ export default async function Home() {
       {/* ヒーローセクション */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>沖縄ボウリング場ガイド</h1>
+          <h1 className={styles.heroTitle}>沖縄県ボウリング場ガイド</h1>
           <p className={styles.heroSubtitle}>
             沖縄県内の厳選ボウリング場情報をご紹介します
           </p>
@@ -26,7 +26,7 @@ export default async function Home() {
 
         {/* ボウリング場一覧 */}
         <section className={styles.alleysSection}>
-          <h2 className={styles.sectionTitle}>沖縄のボウリング場</h2>
+          <h2 className={styles.sectionTitle}>沖縄県のボウリング場</h2>
           <p className={styles.sectionSubtitle}>
             全 {bowlingDataList.contents.length} 店舗を紹介しています
           </p>

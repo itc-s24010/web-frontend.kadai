@@ -64,9 +64,9 @@ export default async function BowlingDetailPage({
                 <div className={styles.infoCard}>
                   <h3 className={styles.infoTitle}>🌐 ウェブサイト</h3>
                   <p className={styles.infoContent}>
-                    <Link href={"bowlingData.website"}>
+                    <a href={bowlingData.website} target="_blank" rel="noopener noreferrer">
                       公式サイトを見る
-                    </Link>
+                    </a>
                   </p>
                 </div>
               )}
